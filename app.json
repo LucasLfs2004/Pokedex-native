@@ -21,7 +21,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.lucaslfs2004.pokedexnative"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -31,6 +32,12 @@
         "projectId": "ad254f1c-6cf5-4c67-ae65-3a52d24f1443"
       }
     },
-    "owner": "lucaslfs2004"
+    "owner": "lucaslfs2004",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/ad254f1c-6cf5-4c67-ae65-3a52d24f1443"
+    }
   }
 }
