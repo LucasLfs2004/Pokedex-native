@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ad254f1c-6cf5-4c67-ae65-3a52d24f1443"
+      }
+    },
+    "owner": "lucaslfs2004"
   }
 }
