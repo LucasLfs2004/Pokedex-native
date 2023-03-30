@@ -1,37 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
 import MenuInicial from './src/mainMenu/Menu';
+import Pokemon from './src/Pokemon/Pokemon';
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator, CardStyleInterpolators } from "@react-navigation/stack";
+
+
+const AppStack = createStackNavigator();
+
 
 export default function App() {
-  // useEffect(()=>{
-  //   async function loadFonts(){
-  //     await Font.loadAsync({
-  //       'Montserrat Regular': require("./assets/fonts/Montserrat-Regular.ttf"),
-  //       'Montserrat-SemiBold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
-  //       'Montserrat-Bold': require('./assets/fonts/Montserrat-Bold.ttf'),
-  //     }).then(res=>{
-  //       console.log("FONTS LOADED!");
-  //       setLoaded(true)
-  //     }).catch(Err=>{
-  //       setLoaded(true);
-  //       console.log(Err);
-  //     }); 
-  //   }
-
-  //   loadFonts();
-  // },[])
 
   return (
-    <MenuInicial />
+    <NavigationContainer>
+      <AppStack.Navigator
+        screenOptions={{
+          gestureEnabled: true,
+          gestureDirection: "horizontal",
+          cardStyleInterpolator:
+            CardStyleInterpolators.forFadeFromBottomAndroid
+        }}
+      >
+        <AppStack.Screen name="First" component={MenuInicial} />
+        <AppStack.Screen name="Second" component={Pokemon} />
+      </AppStack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

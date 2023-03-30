@@ -5,8 +5,18 @@ import styles from './styles/MenuStyle';
 import stylesCard from './styles/CardStyle';
 import stylesColorCard from './styles/ColorStyle';
 import axios from 'axios';
+import { useNavigation } from "@react-navigation/native";
 
 export default function MenuInicial() {
+
+
+  const navigation = useNavigation();
+
+  function navigateToSecond() {
+    navigation.navigate("Second");
+  }
+
+
 
   var endpoints = [];
   const [textSearch, setTextSearch] = useState();
@@ -63,15 +73,17 @@ export default function MenuInicial() {
   return (
     <View style={styles.container}>
       <View style={styles.title}>
-        <Image
-          style={styles.imgLogo}
-          source={require("../assets/icon/pokebola.png")}
-        />
-        <Text style={styles.logo}>Pokedex</Text>
-        <Image
-          style={styles.imgLogo}
-          source={require("../assets/icon/pokebola.png")}
-        />
+        <TouchableOpacity onPress={navigateToSecond}>
+          <Image
+            style={styles.imgLogo}
+            source={require("../assets/icon/pokebola.png")}
+          />
+          <Text style={styles.logo}>Pokedex</Text>
+          <Image
+            style={styles.imgLogo}
+            source={require("../assets/icon/pokebola.png")}
+          />
+        </TouchableOpacity>
       </View>
       <View style={styles.containerHeader}>
         <View style={styles.btnOptions}>
