@@ -1,22 +1,26 @@
+import { connect } from 'react-redux';
+import { changePokemon } from '../store/actions/pokemon';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, View, Image, TextInput, Button, TouchableOpacity } from 'react-native';
 import styles from './styles/MenuStyle';
 import stylesCard from './styles/CardStyle';
 import stylesColorCard from './styles/ColorStyle';
+import stylesBgCard from './styles/BackgroundColorStyle';
 import axios from 'axios';
 import { useNavigation } from "@react-navigation/native";
 
-export default function MenuInicial() {
+function MenuInicial(props) {
 
-
+  const {pokemon} = props;
   const navigation = useNavigation();
 
-  function navigateToSecond() {
-    navigation.navigate("Second");
+  const navigateToSecond = async (nome) => {
+    const query = await axios.get(`https://pokeapi.co/api/v2/pokemon/${nome}/`);
+    props.changePokemon(query);
+    navigation.navigate("Pokemon");
+    console.log(pokemon);
   }
-
-
 
   var endpoints = [];
   const [textSearch, setTextSearch] = useState();
@@ -73,7 +77,6 @@ export default function MenuInicial() {
   return (
     <View style={styles.container}>
       <View style={styles.title}>
-        <TouchableOpacity onPress={navigateToSecond}>
           <Image
             style={styles.imgLogo}
             source={require("../assets/icon/pokebola.png")}
@@ -83,7 +86,6 @@ export default function MenuInicial() {
             style={styles.imgLogo}
             source={require("../assets/icon/pokebola.png")}
           />
-        </TouchableOpacity>
       </View>
       <View style={styles.containerHeader}>
         <View style={styles.btnOptions}>
@@ -130,9 +132,11 @@ export default function MenuInicial() {
               types.push(item.data.types[i].type.name)
             }
             return (
-              <View
+              <TouchableOpacity onPress={() =>
+                navigateToSecond(item.data.name)
+              }
                 key={key}
-                style={[stylesCard.cardPokemon, stylesColorCard[item.data.types[0].type.name]]}>
+                style={[stylesCard.cardPokemon, stylesBgCard[item.data.types[0].type.name]]}>
                 <Text style={stylesCard.name}>{item.data.name}</Text>
                 <Image
                   style={[stylesCard.imgCard, { resizeMode: 'cover' }]}
@@ -147,7 +151,7 @@ export default function MenuInicial() {
                     </View>
                   ))}
                 </View>
-              </View>
+              </TouchableOpacity>
             )
           })}
         </View>
@@ -164,3 +168,23 @@ export default function MenuInicial() {
     </View >
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    pokemon: state.pokemon.pokemon,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    changePokemon(pokemon) {
+      const action = changePokemon(pokemon);
+      dispatch(action);
+    },
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MenuInicial);
