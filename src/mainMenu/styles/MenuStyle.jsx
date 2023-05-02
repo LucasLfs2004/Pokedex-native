@@ -1,5 +1,7 @@
 import { StyleSheet } from "react-native";
 
+
+//Comentário inutil
 const styles = StyleSheet.create({
   container: {
     paddingTop: 30,
