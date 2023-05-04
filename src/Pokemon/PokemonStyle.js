@@ -79,6 +79,12 @@ const StylesPokemon = StyleSheet.create({
   progressBar: {
     height: 9,
   },
+
+  borderBtn: {
+    borderBottomColor: '#FFF',
+    borderBottomWidth: 2,
+    borderStyle: 'solid',
+  }
 });
 
 export default StylesPokemon;
