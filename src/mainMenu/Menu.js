@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { changePokemon } from '../store/actions/pokemon';
+import { changePokemon, changeInitialPokemon, changeLastPokemon, changeMiddlePokemon } from '../store/actions/pokemon';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, View, Image, TextInput, Button, TouchableOpacity } from 'react-native';
@@ -11,15 +11,22 @@ import axios from 'axios';
 import { useNavigation } from "@react-navigation/native";
 
 function MenuInicial(props) {
-
-  const {pokemon} = props;
   const navigation = useNavigation();
 
   const navigateToSecond = async (nome) => {
     const query = await axios.get(`https://pokeapi.co/api/v2/pokemon/${nome}/`);
-    props.changePokemon(query);
+    await props.changePokemon(query);
     navigation.navigate("Pokemon");
-    console.log(pokemon);
+  }
+
+  const getInitialPokemon = async (id) => {
+    const requisition = await axios.get(`https://pokeapi.co/api/v2/evolution-chain/${id}/`)
+    const pokemon1 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.species.name}/`)
+    props.changeInitialPokemon(pokemon1);
+    const pokemon2 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.evolves_to[0].species.name}/`)
+    props.changeMiddlePokemon(pokemon2);
+    const pokemon3 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.evolves_to[0].evolves_to[0].species.name}/`)
+    props.changeLastPokemon(pokemon3);
   }
 
   var endpoints = [];
@@ -77,15 +84,15 @@ function MenuInicial(props) {
   return (
     <View style={styles.container}>
       <View style={styles.title}>
-          <Image
-            style={styles.imgLogo}
-            source={require("../assets/icon/pokebola.png")}
-          />
-          <Text style={styles.logo}>Pokedex</Text>
-          <Image
-            style={styles.imgLogo}
-            source={require("../assets/icon/pokebola.png")}
-          />
+        <Image
+          style={styles.imgLogo}
+          source={require("../assets/icon/pokebola.png")}
+        />
+        <Text style={styles.logo}>Pokedex</Text>
+        <Image
+          style={styles.imgLogo}
+          source={require("../assets/icon/pokebola.png")}
+        />
       </View>
       <View style={styles.containerHeader}>
         <View style={styles.btnOptions}>
@@ -132,8 +139,10 @@ function MenuInicial(props) {
               types.push(item.data.types[i].type.name)
             }
             return (
-              <TouchableOpacity onPress={() =>
-                navigateToSecond(item.data.name)
+              <TouchableOpacity onPress={() => {
+                getInitialPokemon(Math.ceil(item.data.id / 3));
+                navigateToSecond(item.data.name, item.data.id)
+              }
               }
                 key={key}
                 style={[stylesCard.cardPokemon, stylesBgCard[item.data.types[0].type.name]]}>
@@ -156,7 +165,7 @@ function MenuInicial(props) {
           })}
         </View>
         {
-          textSearch === "" ?
+          textSearch === "" || textSearch === undefined || textSearch === null ?
             <Button
               style={stylesCard.button}
               onPress={(e) => setLimit(limit + 8)}
@@ -172,6 +181,9 @@ function MenuInicial(props) {
 function mapStateToProps(state) {
   return {
     pokemon: state.pokemon.pokemon,
+    initialPokemon: state.pokemon.initialPokemon,
+    middlePokemon: state.pokemon.middlePokemon,
+    lastPokemon: state.pokemon.lastPokemon,
   };
 }
 
@@ -181,6 +193,19 @@ function mapDispatchToProps(dispatch) {
       const action = changePokemon(pokemon);
       dispatch(action);
     },
+    changeInitialPokemon(initialPokemon) {
+      const action = changeInitialPokemon(initialPokemon);
+      dispatch(action);
+    },
+    changeMiddlePokemon(middlePokemon) {
+      const action = changeMiddlePokemon(middlePokemon);
+      dispatch(action);
+    },
+    changeLastPokemon(lastPokemon) {
+      const action = changeLastPokemon(lastPokemon);
+      dispatch(action);
+    },
+
   };
 }
 

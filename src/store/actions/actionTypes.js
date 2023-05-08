@@ -1,1 +1,4 @@
 export const NEW_POKEMON = 'NEW_POKEMON'
+export const INITIAL_POKEMON = 'INITIAL_POKEMON'
+export const MIDDLE_POKEMON = 'MIDDLE_POKEMON'
+export const LAST_POKEMON = 'LAST_POKEMON'

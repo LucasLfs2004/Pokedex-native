@@ -7,9 +7,10 @@ import StylesPokemon from './PokemonStyle';
 import stylesColorCard from '../mainMenu/styles/ColorStyle';
 import stylesBgCard from '../mainMenu/styles/BackgroundColorStyle';
 import Stats from './Stats';
+import Evolutions from './Evolutions';
 
 function Pokemon(props) {
-  const { pokemon } = props;
+  const { pokemon, initialPokemon, middlePokemon, lastPokemon } = props;
   const [option, setOption] = useState('stats');
 
   return (
@@ -39,7 +40,7 @@ function Pokemon(props) {
         </View>
 
         {option === 'stats' ? <Stats /> : <></>}
-        {option === 'evolutions' ? <Stats /> : <></>}
+        {option === 'evolutions' ? <Evolutions /> : <></>}
         {option === 'characteristics' ? <Stats /> : <></>}
       </View>
     </View >
@@ -51,6 +52,9 @@ function Pokemon(props) {
 function mapStateToProps(state) {
   return {
     pokemon: state.pokemon.pokemon,
+    initialPokemon: state.pokemon.initialPokemon,
+    middlePokemon: state.pokemon.middlePokemon,
+    lastPokemon: state.pokemon.lastPokemon
   };
 }
 
