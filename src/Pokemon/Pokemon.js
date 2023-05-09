@@ -1,47 +1,49 @@
 import React, { useState } from 'react';
 import * as Progress from 'react-native-progress';
-import { ScrollView, Text, View, Image, TextInput, Button, TouchableOpacity, ProgressBarAndroidComponent } from 'react-native';
+import { ScrollView, Text, View, Image, TextInput, Button, TouchableOpacity, ProgressBarAndroidComponent, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { changePokemon } from '../store/actions/pokemon';
-import StylesPokemon from './PokemonStyle';
 import stylesColorCard from '../mainMenu/styles/ColorStyle';
 import stylesBgCard from '../mainMenu/styles/BackgroundColorStyle';
 import Stats from './Stats';
 import Evolutions from './Evolutions';
+import Characters from './Characters';
 
 function Pokemon(props) {
-  const { pokemon, initialPokemon, middlePokemon, lastPokemon } = props;
+  const { pokemon } = props;
   const [option, setOption] = useState('stats');
 
   return (
-    <View style={[StylesPokemon.content, stylesBgCard[pokemon.data.types[0].type.name]]} >
-      <View style={StylesPokemon.contentImg}>
-        <Image
-          style={StylesPokemon.img}
-          source={{ uri: pokemon['data']['sprites']['other']['official-artwork']['front_default'] }}
-        />
-        <Text style={StylesPokemon.title}>
+    <View style={[styles.content, stylesBgCard[pokemon.data.types[0].type.name]]} >
+      <View style={styles.displayTitle}>
+        <Text style={[styles.title, stylesColorCard[pokemon.data.types[0].type.name]]}>
           {pokemon.data.name}
         </Text>
       </View>
-      <View style={StylesPokemon.cardStats}>
-        <View style={StylesPokemon.tabs}>
-          <TouchableOpacity onPress={() => setOption('stats')} style={option === 'stats' && StylesPokemon.borderBtn}>
-            <Text style={StylesPokemon.tabBtn}>Stats</Text>
+      <View style={styles.contentImg}>
+        <Image
+          style={styles.img}
+          source={{ uri: pokemon['data']['sprites']['other']['official-artwork']['front_default'] }}
+        />
+      </View>
+      <View style={styles.cardStats}>
+        <View style={styles.tabs}>
+          <TouchableOpacity onPress={() => setOption('stats')} style={option === 'stats' && styles.borderBtn}>
+            <Text style={styles.tabBtn}>Stats</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setOption('evolutions')}
-          style={option === 'evolutions' && StylesPokemon.borderBtn}>
-            <Text style={StylesPokemon.tabBtn}>Evolutions</Text>
+            style={option === 'evolutions' && styles.borderBtn}>
+            <Text style={styles.tabBtn}>Evolutions</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setOption('characteristics')}
-          style={option === 'characteristics' && StylesPokemon.borderBtn}>
-            <Text style={StylesPokemon.tabBtn}>Characteristics</Text>
+            style={option === 'characteristics' && styles.borderBtn}>
+            <Text style={styles.tabBtn}>Characteristics</Text>
           </TouchableOpacity>
         </View>
 
         {option === 'stats' ? <Stats /> : <></>}
         {option === 'evolutions' ? <Evolutions /> : <></>}
-        {option === 'characteristics' ? <Stats /> : <></>}
+        {option === 'characteristics' ? <Characters /> : <></>}
       </View>
     </View >
   );
@@ -71,3 +73,111 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Pokemon);
+
+const styles = StyleSheet.create({
+  content: {
+    position: 'relative',
+    flex: 1,
+    width: '100%',
+  },
+  img: {
+    width: 200,
+    height: 200,
+  },
+  contentImg: {
+    height: 384,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cardStats: {
+    borderRadius: '30 0 30 0',
+    flex: 1,
+    width: '100%',
+    backgroundColor: '#2C3E50'
+  },
+  tabs: {
+    paddingTop: 15,
+    marginHorizontal: 30,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: "space-between",
+  },
+  tabBtn: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: '#fff',
+  },
+  scroll: {
+    flex: 1,
+  },
+  container: {
+    marginHorizontal: 30,
+    flex: 1,
+    height: 300,
+    marginTop: 10,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  statsAtt: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  containerStats: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: 52,
+  },
+  displayPower: {
+    marginTop: 21,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-end'
+  },
+  bgStats: {
+    marginVertical: 15,
+    backgroundColor: '#fff',
+    borderRadius: 50,
+    width: 115,
+    height: 22,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  numberStats: {
+    paddingTop: 5,
+    color: '#fff',
+    fontSize: 14,
+  },
+  progressBar: {
+    height: 9,
+  },
+
+  borderBtn: {
+    borderBottomColor: '#FFF',
+    borderBottomWidth: 2,
+    borderStyle: 'solid',
+  },
+
+  displayTitle: {
+    position: 'absolute',
+    borderRadius: 30,
+    width: 196,
+    height: 34,
+    backgroundColor: '#fff',
+    top: 160,
+    left: -38,
+    transform: [{ rotate: '270deg' }],
+  },
+
+  title: {
+    textTransform: 'capitalize',
+    lineHeight: 34,
+    fontSize: 28,
+    fontWeight: '400',
+    textAlign: 'center',
+  }
+});
