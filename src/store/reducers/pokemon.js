@@ -1,10 +1,12 @@
-import { NEW_POKEMON, INITIAL_POKEMON, MIDDLE_POKEMON, LAST_POKEMON } from "../actions/actionTypes"
+import { NEW_POKEMON, INITIAL_POKEMON, MIDDLE_POKEMON, LAST_POKEMON, FEMALE_POKEMON, MALE_POKEMON } from "../actions/actionTypes"
 
 const initialState = {
   pokemon: "",
   initialPokemon: "",
   middlePokemon: "",
   lastPokemon: "",
+  malePokemon: "",
+  femalePokemon: "",
 }
 
 export default function (state = initialState, action) {
@@ -28,6 +30,17 @@ export default function (state = initialState, action) {
       return {
         ...state,
         lastPokemon: action.payload
+      }
+    case MALE_POKEMON: {
+      return {
+        ...state,
+        malePokemon: action.payload
+      }
+    }
+    case FEMALE_POKEMON:
+      return {
+        ...state,
+        femalePokemon: action.payload
       }
     default:
       return state

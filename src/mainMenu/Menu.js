@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { changePokemon, changeInitialPokemon, changeLastPokemon, changeMiddlePokemon } from '../store/actions/pokemon';
+import { changePokemon, changeInitialPokemon, changeLastPokemon, changeMiddlePokemon, changeFemalePokemon, changeMalePokemon } from '../store/actions/pokemon';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, View, Image, TextInput, Button, TouchableOpacity } from 'react-native';
@@ -33,8 +33,25 @@ function MenuInicial(props) {
   const [textSearch, setTextSearch] = useState();
   const [pokemons, setPokemons] = useState([]);
   const [limit, setLimit] = useState(31);
+  // useEffect(() => {
+  //   getGenders();
+  // }, [genders]);
+
+  const getGenders = async () => {
+
+    if(props.femalePokemon === "" || props.femalePokemon === undefined || props.femalePokemon === null &&
+    props.malePokemon === "" || props.malePokemon === undefined || props.malePokemon === null) {
+      const female = await axios.get(`https://pokeapi.co/api/v2/gender/1/`);
+      props.changeFemalePokemon(female);
+      const male = await axios.get(`https://pokeapi.co/api/v2/gender/2/`);
+      props.changeMalePokemon(male)
+      console.log('Requisição feita')
+     } else console.log('generos já preenchidos')
+  }
+
   useEffect(() => {
     getPokemons();
+    getGenders();
   }, [limit]
   );
 
@@ -184,6 +201,8 @@ function mapStateToProps(state) {
     initialPokemon: state.pokemon.initialPokemon,
     middlePokemon: state.pokemon.middlePokemon,
     lastPokemon: state.pokemon.lastPokemon,
+    malePokemon: state.pokemon.malePokemon,
+    femalePokemon: state.pokemon.femalePokemon,
   };
 }
 
@@ -205,7 +224,14 @@ function mapDispatchToProps(dispatch) {
       const action = changeLastPokemon(lastPokemon);
       dispatch(action);
     },
-
+    changeFemalePokemon(femalePokemon) {
+      const action = changeFemalePokemon(femalePokemon);
+      dispatch(action);
+    },
+    changeMalePokemon(malePokemon) {
+      const action = changeMalePokemon(malePokemon);
+      dispatch(action);
+    }
   };
 }
 

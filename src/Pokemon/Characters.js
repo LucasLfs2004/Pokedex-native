@@ -5,12 +5,33 @@ import { connect } from 'react-redux';
 import { changePokemon } from '../store/actions/pokemon';
 import stylesColorCard from '../mainMenu/styles/ColorStyle';
 import stylesBgCard from '../mainMenu/styles/BackgroundColorStyle';
+import Feminino from '../assets/icon/feminino.png';
+import Masculino from '../assets/icon/masculino.png';
 
 function Characteristics(props) {
-  const { pokemon } = props;
+  const { pokemon, femalePokemon, malePokemon } = props;
+  console.log(femalePokemon.data.pokemon_species_details[0].pokemon_species)
 
   return (
     <ScrollView style={styles.scroll}>
+
+      <Text style={[styles.title, styles.txtWhite]}>Genders</Text>
+      <View style={styles.containerGenders} >
+        {femalePokemon.data.pokemon_species_details.map((item, key) => (
+          <View key={key}>
+            {item.pokemon_species.name === pokemon.data.name ? <Image style={styles.iconGender} key={key} source={require('../assets/icon/feminino.png')} /> :
+              <></>}
+          </View>
+        ))
+        }
+        {malePokemon.data.pokemon_species_details.map((item, key) => (
+          <View key={key}>
+            {item.pokemon_species.name === pokemon.data.name ? <Image style={styles.iconGender} key={key} source={require('../assets/icon/masculino.png')} /> :
+              <></>}
+          </View>
+        ))
+        }
+      </View>
       <Text style={[styles.title, styles.txtWhite]}>Type</Text>
       <View style={styles.containerTypes}>
         {pokemon.data.types.map((item, key) =>
@@ -23,8 +44,7 @@ function Characteristics(props) {
         )
         )}
       </View>
-        <Text style={[styles.title, styles.txtWhite]}>Weakness</Text>
-      
+
     </ScrollView>
   );
 }
@@ -34,6 +54,8 @@ function Characteristics(props) {
 function mapStateToProps(state) {
   return {
     pokemon: state.pokemon.pokemon,
+    malePokemon: state.pokemon.malePokemon,
+    femalePokemon: state.pokemon.femalePokemon,
   };
 }
 
@@ -87,5 +109,9 @@ const styles = StyleSheet.create({
   },
   txtWhite: {
     color: '#fff',
+  },
+  iconGender: {
+    width: 16,
+    height: 16
   }
 });

@@ -1,4 +1,4 @@
-import { NEW_POKEMON, INITIAL_POKEMON, MIDDLE_POKEMON, LAST_POKEMON } from "./actionTypes"
+import { NEW_POKEMON, INITIAL_POKEMON, MIDDLE_POKEMON, LAST_POKEMON, FEMALE_POKEMON, MALE_POKEMON } from "./actionTypes"
 
 
 //Action Creator
@@ -24,5 +24,17 @@ export function changeLastPokemon(lastPokemon) {
   return {
     type: LAST_POKEMON,
     payload: lastPokemon
+  }
+}
+export function changeMalePokemon(malePokemon) {
+  return {
+    type: MALE_POKEMON,
+    payload: malePokemon
+  }
+}
+export function changeFemalePokemon(femalePokemon) {
+  return {
+    type: FEMALE_POKEMON,
+    payload: femalePokemon
   }
 }
