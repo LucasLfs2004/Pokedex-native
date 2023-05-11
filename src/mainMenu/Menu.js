@@ -20,13 +20,25 @@ function MenuInicial(props) {
   }
 
   const getInitialPokemon = async (id) => {
+    console.log(id)
+    props.changeInitialPokemon('');
+    props.changeMiddlePokemon('');
+    props.changeLastPokemon('');
+
     const requisition = await axios.get(`https://pokeapi.co/api/v2/evolution-chain/${id}/`)
+    console.log(requisition.data.chain.evolves_to[0].evolves_to[0] === undefined)
     const pokemon1 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.species.name}/`)
     props.changeInitialPokemon(pokemon1);
     const pokemon2 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.evolves_to[0].species.name}/`)
     props.changeMiddlePokemon(pokemon2);
-    const pokemon3 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.evolves_to[0].evolves_to[0].species.name}/`)
-    props.changeLastPokemon(pokemon3);
+    if(requisition.data.chain.evolves_to[0].evolves_to == undefined) {
+      changeLastPokemon('');
+    } else {
+      const pokemon3 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.evolves_to[0].evolves_to[0].species.name}/`)
+      props.changeLastPokemon(pokemon3);
+    }
+
+
   }
 
   var endpoints = [];

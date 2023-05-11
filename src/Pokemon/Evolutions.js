@@ -56,28 +56,34 @@ function Evolutions(props) {
             source={{ uri: middlePokemon['data']['sprites']['other']['official-artwork']['front_default'] }}
           />
         </View>
-        <Image source={seta} style={Styles.setaIcon} />
-        <View style={Styles.containerEvo}>
-          <View style={Styles.infosEvo}>
-            <Text style={[Styles.name, stylesColorCard[lastPokemon.data.types[0].type.name]]}>{lastPokemon.data.name}</Text>
+        {lastPokemon !== '' ?
+          <>
 
-            <View style={Styles.containerTypes}>
-              {lastPokemon.data.types.map((item, key) =>
-              (
-                <View key={key} style={Styles.types}>
-                  <Text style={[Styles.p, stylesColorCard[item.type.name]]}>
-                    {item.type.name}
-                  </Text>
+            <Image source={seta} style={Styles.setaIcon} />
+            <View style={Styles.containerEvo}>
+              <View style={Styles.infosEvo}>
+                <Text style={[Styles.name, stylesColorCard[lastPokemon.data.types[0].type.name]]}>{lastPokemon.data.name}</Text>
+
+                <View style={Styles.containerTypes}>
+                  {lastPokemon.data.types.map((item, key) =>
+                  (
+                    <View key={key} style={Styles.types}>
+                      <Text style={[Styles.p, stylesColorCard[item.type.name]]}>
+                        {item.type.name}
+                      </Text>
+                    </View>
+                  )
+                  )}
                 </View>
-              )
-              )}
+              </View>
+              <Image
+                style={[Styles.evolution, { resizeMode: 'cover' }]}
+                source={{ uri: lastPokemon['data']['sprites']['other']['official-artwork']['front_default'] }}
+              />
             </View>
-          </View>
-          <Image
-            style={[Styles.evolution, { resizeMode: 'cover' }]}
-            source={{ uri: lastPokemon['data']['sprites']['other']['official-artwork']['front_default'] }}
-          />
-        </View>
+          </>
+          : <></>}
+
       </View>
     </ScrollView >
   );

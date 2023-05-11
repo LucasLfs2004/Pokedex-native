@@ -14,24 +14,57 @@ function Characteristics(props) {
 
   return (
     <ScrollView style={styles.scroll}>
+      <View style={styles.containerAtt}>
 
-      <Text style={[styles.title, styles.txtWhite]}>Genders</Text>
-      <View style={styles.containerGenders} >
-        {femalePokemon.data.pokemon_species_details.map((item, key) => (
-          <View key={key}>
-            {item.pokemon_species.name === pokemon.data.name ? <Image style={styles.iconGender} key={key} source={require('../assets/icon/feminino.png')} /> :
-              <></>}
+        <View style={styles.display}>
+          <Text style={[styles.title, stylesColorCard[pokemon.data.types[0].type.name]]}>
+            Height
+          </Text>
+          <Text style={[styles.textDefault, styles.txtWhite]}>
+            {pokemon.data.height / 10}m
+          </Text>
+        </View>
+        <View style={styles.display}>
+          <Text style={[styles.title, stylesColorCard[pokemon.data.types[0].type.name]]}>
+            Height
+          </Text>
+          <Text style={[styles.textDefault, styles.txtWhite]}>
+            {pokemon.data.weight / 10}m
+          </Text>
+        </View>
+
+        <View style={styles.display}>
+          <Text style={[styles.title, stylesColorCard[pokemon.data.types[0].type.name]]}>Genders</Text>
+          <View style={styles.genders}>
+
+            {femalePokemon.data.pokemon_species_details.map((item, key) => (
+              <View key={key}>
+                {item.pokemon_species.name === pokemon.data.name ? <Image style={styles.iconGender} key={key} source={require('../assets/icon/feminino.png')} /> :
+                  <></>}
+              </View>
+            ))
+            }
+            {malePokemon.data.pokemon_species_details.map((item, key) => (
+              <View key={key}>
+                {item.pokemon_species.name === pokemon.data.name ? <Image style={styles.iconGender} key={key} source={require('../assets/icon/masculino.png')} /> :
+                  <></>}
+              </View>
+            ))
+            }
           </View>
-        ))
-        }
-        {malePokemon.data.pokemon_species_details.map((item, key) => (
-          <View key={key}>
-            {item.pokemon_species.name === pokemon.data.name ? <Image style={styles.iconGender} key={key} source={require('../assets/icon/masculino.png')} /> :
-              <></>}
-          </View>
-        ))
-        }
+        </View>
+
+        <View style={styles.display} >
+          <Text style={[styles.title, stylesColorCard[pokemon.data.types[0].type.name]]}>
+            Abilities
+          </Text>
+          <Text style={[styles.textDefault, styles.txtWhite, {textTransform: 'capitalize'}]}>
+            {pokemon.data.abilities[0].ability.name}
+          </Text>
+        </View>
+
       </View>
+
       <Text style={[styles.title, styles.txtWhite]}>Type</Text>
       <View style={styles.containerTypes}>
         {pokemon.data.types.map((item, key) =>
@@ -77,6 +110,19 @@ export default connect(
 const styles = StyleSheet.create({
   scroll: {
     flex: 1,
+    paddingTop: 30,
+    paddingHorizontal: 30,
+  },
+  containerAtt: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between'
+  },
+  display: {
+    width: 100,
+    height: 50,
+    paddingTop: 5,
+    marginBottom: 25,
   },
   title: {
     fontSize: 16,
@@ -86,6 +132,12 @@ const styles = StyleSheet.create({
   containerTypes: {
     flexDirection: 'row',
     marginTop: 12
+  },
+  genders: {
+    marginTop: 8,
+    flexDirection: 'row',
+    width: 40,
+    justifyContent: 'space-between',
   },
   types: {
     marginRight: 10,
@@ -109,6 +161,15 @@ const styles = StyleSheet.create({
   },
   txtWhite: {
     color: '#fff',
+  },
+  textDefault: {
+    marginTop: 8,
+    fontSize: 12,
+    fontWeight: '700',
+    lineHeight: 15
+  },
+  containerGenders: {
+    flexDirection: 'row',
   },
   iconGender: {
     width: 16,
