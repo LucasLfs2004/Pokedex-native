@@ -5,20 +5,21 @@ import Pokemon from './Pokemon/Pokemon';
 //Navegação
 import { Router, Stack, Scene } from 'react-native-router-flux';
 
-const Rota = (props) => {
+const Rota = () => {
   return (
     <>
       <Router>
-        <Stack key="root" initial>
+        <Stack key="root" initial hideNavBar={true}>
             <Scene
               key="homeScreen"
-              title='HomeScreen'
+              navTransparent={true}
               component={MenuInicial}
               direction="horizontal"
-            />
+              />
             <Scene
-              key="detailScreen"
-              title='DetailScreen'
+              key="pokemon"
+              navTransparent={true}
+              title='pokemon'
               component={Pokemon}
               direction="horizontal"
             />

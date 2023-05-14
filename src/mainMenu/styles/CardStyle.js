@@ -21,6 +21,9 @@ const stylesCard = StyleSheet.create({
   name: {
     color: '#fff',
     marginVertical: 11,
+    fontWeight: 700,
+    fontSize: 16,
+    textTransform: 'capitalize'
   },
   imgCard: {
     width: 90,
@@ -31,15 +34,15 @@ const stylesCard = StyleSheet.create({
     width: 150,
     flexWrap: 'wrap',
     flexDirection: 'column',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    marginLeft: 20
   },
   types: {
     backgroundColor: '#72829370',
     color: '#fff',
     borderRadius: 20,
     width: 76,
-    height: 18,
-    display: 'flex',
+    height: 20,
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 6,

@@ -1,65 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import * as Progress from 'react-native-progress';
-import { ScrollView, Text, View, Image, TextInput, Button, TouchableOpacity, ProgressBarAndroidComponent } from 'react-native';
+import React from 'react';
+import { ScrollView, Text, View, Image, } from 'react-native';
 import { connect } from 'react-redux';
-import { changePokemon } from '../store/actions/pokemon';
 import stylesColorCard from '../mainMenu/styles/ColorStyle';
-import stylesBgCard from '../mainMenu/styles/BackgroundColorStyle';
-import axios from 'axios';
 import seta from "../assets/icon/avance.png"
 
 function Evolutions(props) {
-  // useEffect(() => {
-  //   getEvolutions()
-  // }, [pokemon])
-
-
-  // const getEvolutions = async () => {
-  //   props.changeLastPokemon('');
-  //   const evolutions = await axios.get(pokemon.data.species.url)
-  //   const query = await axios.get(evolutions.data.evolution_chain.url)
-  //   const pokemon1 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${query.data.chain.species.name}/`)
-  //   props.changeInitialPokemon(pokemon1);
-  //   const pokemon2 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${query.data.chain.evolves_to[0].species.name}/`)
-  //   props.changeMiddlePokemon(pokemon2);
-  //   if (!(requisition.data.chain.evolves_to[0].evolves_to[0] == undefined)) {
-  //     const pokemon3 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${query.data.chain.evolves_to[0].evolves_to[0].species.name}/`)
-  //     props.changeLastPokemon(pokemon3);
-  //   }    
-  // }
-
-  // const getEvolutionChain = async () => {
-  //   const pokemon1 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.species.name}/`)
-  //   props.changeInitialPokemon(pokemon1);
-  //   const pokemon2 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.evolves_to[0].species.name}/`)
-  //   props.changeMiddlePokemon(pokemon2);
-  //   if (!(requisition.data.chain.evolves_to[0].evolves_to[0] == undefined)) {
-  //     const pokemon3 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.evolves_to[0].evolves_to[0].species.name}/`)
-  //     props.changeLastPokemon(pokemon3);
-  //   }
-  //   navigateToSecond()
-  // }
-
-
-  // const getSpecies = async () => {
-  //   props.changeLastPokemon('');
-  //   const evolutions = await axios.get(pokemon.data.species.url)
-  //   const query = await axios.get(evolutions.data.evolution_chain.url)
-  //   setRequisition(query)
-  //   console.log(requisition)
-  //   // console.log(requisition.data.chain.evolves_to[0].evolves_to[0] === undefined)
-  //   // const pokemon1 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.species.name}/`)
-  //   // props.changeInitialPokemon(pokemon1);
-  //   // const pokemon2 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.evolves_to[0].species.name}/`)
-  //   // await props.changeMiddlePokemon(pokemon2);
-  //   // if (!(requisition.data.chain.evolves_to[0].evolves_to[0] == undefined)) {
-  //   //   const pokemon3 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.evolves_to[0].evolves_to[0].species.name}/`)
-  //   //   await props.changeLastPokemon(pokemon3);
-  //   // }
-  //   // navigateToSecond()
-  //   getEvolutionChain()
-  // }
-
   const { initialPokemon, middlePokemon, lastPokemon, pokemon } = props;
   console.log(initialPokemon)
   return (
@@ -155,18 +100,8 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    changePokemon(pokemon) {
-      const action = changePokemon(pokemon);
-      dispatch(action);
-    },
-  };
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
 )(Evolutions);
 
 import { StyleSheet } from "react-native";

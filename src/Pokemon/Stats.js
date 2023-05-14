@@ -1,10 +1,9 @@
 import React from 'react';
 import * as Progress from 'react-native-progress';
-import { ScrollView, Text, View, Image, TextInput, Button, TouchableOpacity, ProgressBarAndroidComponent, StyleSheet } from 'react-native';
+import { ScrollView, Text, View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { changePokemon } from '../store/actions/pokemon';
 import stylesColorCard from '../mainMenu/styles/ColorStyle';
-import stylesBgCard from '../mainMenu/styles/BackgroundColorStyle';
 
 function Stats(props) {
   const { pokemon } = props;

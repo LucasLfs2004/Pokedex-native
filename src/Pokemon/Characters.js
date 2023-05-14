@@ -3,7 +3,6 @@ import { ScrollView, Text, View, Image, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { changePokemon } from '../store/actions/pokemon';
 import stylesColorCard from '../mainMenu/styles/ColorStyle';
-import stylesBgCard from '../mainMenu/styles/BackgroundColorStyle';
 
 function Characteristics(props) {
   const { pokemon, femalePokemon, malePokemon } = props;
@@ -151,10 +150,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center'
   },
-  containerEvo: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
   txtWhite: {
     color: '#fff',
   },
@@ -163,9 +158,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '700',
     lineHeight: 15
-  },
-  containerGenders: {
-    flexDirection: 'row',
   },
   iconGender: {
     width: 16,

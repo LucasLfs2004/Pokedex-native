@@ -1,9 +1,7 @@
 import { StyleSheet } from "react-native";
 
-//Comentário inutil
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 30,
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
@@ -42,7 +40,7 @@ const styles = StyleSheet.create({
     width: 230,
     justifyContent: 'space-between',
     backgroundColor: '#D9D9D925',
-    marginLeft: 20,
+    marginLeft: 0,
     padding: 10,
     borderRadius: 30,
   },
@@ -57,7 +55,27 @@ const styles = StyleSheet.create({
   p: {
     color: '#fff',
     fontSize: 14,
-  }
+    textTransform: "capitalize"
+  },
+  button: {
+    width: 100,
+    height: 30,
+    backgroundColor: '#00000030',
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+  },
+  txtBtn: {
+    fontWeight: 700,
+    fontSize: 15,
+    color: '#09F',
+  },
+   contentBotao: {
+    marginTop: 10,
+    width: '100%',
+    justifyContent: "center",
+    alignItems: "center"
+   }
 });
 
 export default styles;
