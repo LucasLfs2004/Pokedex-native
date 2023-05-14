@@ -1,16 +1,12 @@
 import React from 'react';
-import * as Progress from 'react-native-progress';
-import { ScrollView, Text, View, Image, TextInput, Button, TouchableOpacity, ProgressBarAndroidComponent, StyleSheet } from 'react-native';
+import { ScrollView, Text, View, Image, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { changePokemon } from '../store/actions/pokemon';
 import stylesColorCard from '../mainMenu/styles/ColorStyle';
 import stylesBgCard from '../mainMenu/styles/BackgroundColorStyle';
-import Feminino from '../assets/icon/feminino.png';
-import Masculino from '../assets/icon/masculino.png';
 
 function Characteristics(props) {
   const { pokemon, femalePokemon, malePokemon } = props;
-  console.log(femalePokemon.data.pokemon_species_details[0].pokemon_species)
 
   return (
     <ScrollView style={styles.scroll}>

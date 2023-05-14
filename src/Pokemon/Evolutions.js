@@ -9,13 +9,67 @@ import axios from 'axios';
 import seta from "../assets/icon/avance.png"
 
 function Evolutions(props) {
-  const { initialPokemon, middlePokemon, lastPokemon } = props;
+  // useEffect(() => {
+  //   getEvolutions()
+  // }, [pokemon])
+
+
+  // const getEvolutions = async () => {
+  //   props.changeLastPokemon('');
+  //   const evolutions = await axios.get(pokemon.data.species.url)
+  //   const query = await axios.get(evolutions.data.evolution_chain.url)
+  //   const pokemon1 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${query.data.chain.species.name}/`)
+  //   props.changeInitialPokemon(pokemon1);
+  //   const pokemon2 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${query.data.chain.evolves_to[0].species.name}/`)
+  //   props.changeMiddlePokemon(pokemon2);
+  //   if (!(requisition.data.chain.evolves_to[0].evolves_to[0] == undefined)) {
+  //     const pokemon3 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${query.data.chain.evolves_to[0].evolves_to[0].species.name}/`)
+  //     props.changeLastPokemon(pokemon3);
+  //   }    
+  // }
+
+  // const getEvolutionChain = async () => {
+  //   const pokemon1 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.species.name}/`)
+  //   props.changeInitialPokemon(pokemon1);
+  //   const pokemon2 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.evolves_to[0].species.name}/`)
+  //   props.changeMiddlePokemon(pokemon2);
+  //   if (!(requisition.data.chain.evolves_to[0].evolves_to[0] == undefined)) {
+  //     const pokemon3 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.evolves_to[0].evolves_to[0].species.name}/`)
+  //     props.changeLastPokemon(pokemon3);
+  //   }
+  //   navigateToSecond()
+  // }
+
+
+  // const getSpecies = async () => {
+  //   props.changeLastPokemon('');
+  //   const evolutions = await axios.get(pokemon.data.species.url)
+  //   const query = await axios.get(evolutions.data.evolution_chain.url)
+  //   setRequisition(query)
+  //   console.log(requisition)
+  //   // console.log(requisition.data.chain.evolves_to[0].evolves_to[0] === undefined)
+  //   // const pokemon1 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.species.name}/`)
+  //   // props.changeInitialPokemon(pokemon1);
+  //   // const pokemon2 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.evolves_to[0].species.name}/`)
+  //   // await props.changeMiddlePokemon(pokemon2);
+  //   // if (!(requisition.data.chain.evolves_to[0].evolves_to[0] == undefined)) {
+  //   //   const pokemon3 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.evolves_to[0].evolves_to[0].species.name}/`)
+  //   //   await props.changeLastPokemon(pokemon3);
+  //   // }
+  //   // navigateToSecond()
+  //   getEvolutionChain()
+  // }
+
+  const { initialPokemon, middlePokemon, lastPokemon, pokemon } = props;
+  console.log(initialPokemon)
   return (
     <ScrollView style={Styles.scroll}>
       <View style={Styles.container}>
         <View style={Styles.containerEvo}>
           <View style={Styles.infosEvo}>
-            <Text style={[Styles.name, stylesColorCard[initialPokemon.data.types[0].type.name]]}>{initialPokemon.data.name}</Text>
+            <Text style={[Styles.name, stylesColorCard[pokemon.data.types[0].type.name]]}>
+              {initialPokemon.data.name}
+            </Text>
 
             <View style={Styles.containerTypes}>
               {initialPokemon.data.types.map((item, key) =>
@@ -37,7 +91,7 @@ function Evolutions(props) {
         <Image source={seta} style={Styles.setaIcon} />
         <View style={Styles.containerEvo}>
           <View style={Styles.infosEvo}>
-            <Text style={[Styles.name, stylesColorCard[middlePokemon.data.types[0].type.name]]}>{middlePokemon.data.name}</Text>
+            <Text style={[Styles.name, stylesColorCard[pokemon.data.types[0].type.name]]}>{middlePokemon.data.name}</Text>
 
             <View style={Styles.containerTypes}>
               {middlePokemon.data.types.map((item, key) =>
@@ -62,7 +116,7 @@ function Evolutions(props) {
             <Image source={seta} style={Styles.setaIcon} />
             <View style={Styles.containerEvo}>
               <View style={Styles.infosEvo}>
-                <Text style={[Styles.name, stylesColorCard[lastPokemon.data.types[0].type.name]]}>{lastPokemon.data.name}</Text>
+                <Text style={[Styles.name, stylesColorCard[pokemon.data.types[0].type.name]]}>{lastPokemon.data.name}</Text>
 
                 <View style={Styles.containerTypes}>
                   {lastPokemon.data.types.map((item, key) =>

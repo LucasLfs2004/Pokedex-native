@@ -12,53 +12,69 @@ import { useNavigation } from "@react-navigation/native";
 
 function MenuInicial(props) {
   const navigation = useNavigation();
+  const [requisition, setRequisition] = useState({})
 
-  const navigateToSecond = async (nome) => {
-    const query = await axios.get(`https://pokeapi.co/api/v2/pokemon/${nome}/`);
-    await props.changePokemon(query);
+  const { pokemon, initialPokemon, middlePokemon, lastPokemon } = props
+
+  const navigateToSecond = () => {
     navigation.navigate("Pokemon");
   }
 
-  const getInitialPokemon = async (id) => {
-    console.log(id)
-    props.changeInitialPokemon('');
-    props.changeMiddlePokemon('');
-    props.changeLastPokemon('');
+  const getPokemon = async (nome) => {
+    const query = await axios.get(`https://pokeapi.co/api/v2/pokemon/${nome}/`);
+    props.changePokemon(query);
+    // navigateToSecond()
+    navigation.navigate("Pokemon");
+  }
 
-    const requisition = await axios.get(`https://pokeapi.co/api/v2/evolution-chain/${id}/`)
-    console.log(requisition.data.chain.evolves_to[0].evolves_to[0] === undefined)
+
+  const getEvolutionChain = async () => {
     const pokemon1 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.species.name}/`)
     props.changeInitialPokemon(pokemon1);
     const pokemon2 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.evolves_to[0].species.name}/`)
     props.changeMiddlePokemon(pokemon2);
-    if(requisition.data.chain.evolves_to[0].evolves_to == undefined) {
-      changeLastPokemon('');
-    } else {
+    if (!(requisition.data.chain.evolves_to[0].evolves_to[0] == undefined)) {
       const pokemon3 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.evolves_to[0].evolves_to[0].species.name}/`)
       props.changeLastPokemon(pokemon3);
     }
+    navigateToSecond()
+  }
 
 
+  const getSpecies = async () => {
+    props.changeLastPokemon('');
+    const evolutions = await axios.get(pokemon.data.species.url)
+    const query = await axios.get(evolutions.data.evolution_chain.url)
+    setRequisition(query)
+    console.log(requisition)
+    // console.log(requisition.data.chain.evolves_to[0].evolves_to[0] === undefined)
+    // const pokemon1 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.species.name}/`)
+    // props.changeInitialPokemon(pokemon1);
+    // const pokemon2 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.evolves_to[0].species.name}/`)
+    // await props.changeMiddlePokemon(pokemon2);
+    // if (!(requisition.data.chain.evolves_to[0].evolves_to[0] == undefined)) {
+    //   const pokemon3 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${requisition.data.chain.evolves_to[0].evolves_to[0].species.name}/`)
+    //   await props.changeLastPokemon(pokemon3);
+    // }
+    // navigateToSecond()
+    getEvolutionChain()
   }
 
   var endpoints = [];
   const [textSearch, setTextSearch] = useState();
   const [pokemons, setPokemons] = useState([]);
   const [limit, setLimit] = useState(31);
-  // useEffect(() => {
-  //   getGenders();
-  // }, [genders]);
 
   const getGenders = async () => {
 
-    if(props.femalePokemon === "" || props.femalePokemon === undefined || props.femalePokemon === null &&
-    props.malePokemon === "" || props.malePokemon === undefined || props.malePokemon === null) {
+    if (props.femalePokemon === "" || props.femalePokemon === undefined || props.femalePokemon === null &&
+      props.malePokemon === "" || props.malePokemon === undefined || props.malePokemon === null) {
       const female = await axios.get(`https://pokeapi.co/api/v2/gender/1/`);
       props.changeFemalePokemon(female);
       const male = await axios.get(`https://pokeapi.co/api/v2/gender/2/`);
       props.changeMalePokemon(male)
       console.log('Requisição feita')
-     } else console.log('generos já preenchidos')
+    } else console.log('generos já preenchidos')
   }
 
   useEffect(() => {
@@ -169,8 +185,9 @@ function MenuInicial(props) {
             }
             return (
               <TouchableOpacity onPress={() => {
-                getInitialPokemon(Math.ceil(item.data.id / 3));
-                navigateToSecond(item.data.name, item.data.id)
+                getPokemon(item.data.name);
+                // getEvolutionChain(item.data.name);
+                // navigateToSecond()
               }
               }
                 key={key}

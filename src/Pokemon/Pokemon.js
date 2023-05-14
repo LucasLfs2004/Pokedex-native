@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as Progress from 'react-native-progress';
 import { ScrollView, Text, View, Image, TextInput, Button, TouchableOpacity, ProgressBarAndroidComponent, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
@@ -10,7 +10,28 @@ import Evolutions from './Evolutions';
 import Characters from './Characters';
 
 function Pokemon(props) {
-  const { pokemon } = props;
+
+  const { pokemon, initialPokemon, middlePokemon, lastPokemon } = props
+
+  useEffect(() => {
+    getEvolutions()
+  }, [pokemon])
+
+
+  const getEvolutions = async () => {
+     await props.changeLastPokemon('');
+    const evolutions = await axios.get(pokemon.data.species.url)
+    const query = await axios.get(evolutions.data.evolution_chain.url)
+    const pokemon1 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${query.data.chain.species.name}/`)
+    await props.changeInitialPokemon(pokemon1);
+    const pokemon2 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${query.data.chain.evolves_to[0].species.name}/`)
+    await props.changeMiddlePokemon(pokemon2);
+    if (!(requisition.data.chain.evolves_to[0].evolves_to[0] == undefined)) {
+      const pokemon3 = await axios.get(`https://pokeapi.co/api/v2/pokemon/${query.data.chain.evolves_to[0].evolves_to[0].species.name}/`)
+      await props.changeLastPokemon(pokemon3);
+    }
+  }
+
   const [option, setOption] = useState('stats');
 
   return (
@@ -66,7 +87,27 @@ function mapDispatchToProps(dispatch) {
       const action = changePokemon(pokemon);
       dispatch(action);
     },
-  };
+    changeInitialPokemon(initialPokemon) {
+      const action = changeInitialPokemon(initialPokemon);
+      dispatch(action);
+    },
+    changeMiddlePokemon(middlePokemon) {
+      const action = changeMiddlePokemon(middlePokemon);
+      dispatch(action);
+    },
+    changeLastPokemon(lastPokemon) {
+      const action = changeLastPokemon(lastPokemon);
+      dispatch(action);
+    },
+    changeFemalePokemon(femalePokemon) {
+      const action = changeFemalePokemon(femalePokemon);
+      dispatch(action);
+    },
+    changeMalePokemon(malePokemon) {
+      const action = changeMalePokemon(malePokemon);
+      dispatch(action);
+    }
+  }
 }
 
 export default connect(
